@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- このサイトマップは、2026年6月10日の12:33 PMに、WordPress 用のオリジナル SEO プラグイン All in One SEO v4.9.7.2により動的生成されました。 -->
+
+<?xml-stylesheet type="text/xsl" href="https://clubpilates.co.jp/default-sitemap.xsl?sitemap=root"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<sitemap>
+		<loc><![CDATA[https://clubpilates.co.jp/post-sitemap.xml]]></loc>
+		<lastmod><![CDATA[2026-05-13T08:13:03+00:00]]></lastmod>
+	</sitemap>
+	<sitemap>
+		<loc><![CDATA[https://clubpilates.co.jp/page-sitemap.xml]]></loc>
+		<lastmod><![CDATA[2026-06-08T08:37:42+00:00]]></lastmod>
+	</sitemap>
+	<sitemap>
+		<loc><![CDATA[https://clubpilates.co.jp/category-sitemap.xml]]></loc>
+		<lastmod><![CDATA[2026-05-22T01:15:04+00:00]]></lastmod>
+	</sitemap>
+</sitemapindex>

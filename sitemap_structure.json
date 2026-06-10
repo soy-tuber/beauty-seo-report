@@ -1,0 +1,189 @@
+{
+  "pilates-k": {
+    "total_urls": 4550,
+    "leaves": [
+      [
+        "https://pilates-k.jp/sitemap-misc.xml",
+        1
+      ],
+      [
+        "https://pilates-k.jp/column-sitemap.xml",
+        59
+      ],
+      [
+        "https://pilates-k.jp/post-sitemap.xml",
+        1000
+      ],
+      [
+        "https://pilates-k.jp/post-sitemap2.xml",
+        1000
+      ],
+      [
+        "https://pilates-k.jp/post-sitemap3.xml",
+        1000
+      ],
+      [
+        "https://pilates-k.jp/post-sitemap4.xml",
+        1000
+      ],
+      [
+        "https://pilates-k.jp/post-sitemap5.xml",
+        265
+      ],
+      [
+        "https://pilates-k.jp/page-sitemap.xml",
+        225
+      ]
+    ]
+  },
+  "clubpilates": {
+    "total_urls": 19,
+    "leaves": [
+      [
+        "https://clubpilates.co.jp/post-sitemap.xml",
+        3
+      ],
+      [
+        "https://clubpilates.co.jp/page-sitemap.xml",
+        15
+      ],
+      [
+        "https://clubpilates.co.jp/category-sitemap.xml",
+        1
+      ]
+    ]
+  },
+  "rintosull": {
+    "total_urls": 683,
+    "leaves": [
+      [
+        "https://rintosull.jp/sitemap_shop.xml",
+        514
+      ],
+      [
+        "https://rintosull.jp/sitemap_shop_topics.xml",
+        4
+      ],
+      [
+        "https://rintosull.jp/sitemap_shop_topics_pdf.xml",
+        2
+      ],
+      [
+        "https://rintosull.jp/sitemap_news.xml",
+        105
+      ],
+      [
+        "https://rintosull.jp/sitemap_news_pdf.xml",
+        9
+      ],
+      [
+        "https://rintosull.jp/sitemap_other.xml",
+        34
+      ],
+      [
+        "https://rintosull.jp/sitemap_column.xml",
+        15
+      ]
+    ]
+  },
+  "npilates": {
+    "total_urls": 322,
+    "leaves": [
+      [
+        "https://npilates.jp/post-sitemap.xml",
+        215
+      ],
+      [
+        "https://npilates.jp/page-sitemap.xml",
+        69
+      ],
+      [
+        "https://npilates.jp/lp-sitemap.xml",
+        1
+      ],
+      [
+        "https://npilates.jp/category-sitemap.xml",
+        37
+      ]
+    ]
+  },
+  "parler": {
+    "total_urls": 149,
+    "leaves": [
+      [
+        "https://www.parler.co.jp/sitemap.xml",
+        149
+      ]
+    ]
+  },
+  "bikatsu": {
+    "total_urls": 6756,
+    "leaves": [
+      [
+        "https://www.bikatsu.jp/addl-sitemap.xml",
+        1
+      ],
+      [
+        "https://www.bikatsu.jp/post-sitemap.xml",
+        4883
+      ],
+      [
+        "https://www.bikatsu.jp/page-sitemap.xml",
+        14
+      ],
+      [
+        "https://www.bikatsu.jp/blog-sitemap.xml",
+        168
+      ],
+      [
+        "https://www.bikatsu.jp/item-sitemap.xml",
+        37
+      ],
+      [
+        "https://www.bikatsu.jp/shop-sitemap.xml",
+        473
+      ],
+      [
+        "https://www.bikatsu.jp/taiken-sitemap.xml",
+        959
+      ],
+      [
+        "https://www.bikatsu.jp/blog_category-sitemap.xml",
+        10
+      ],
+      [
+        "https://www.bikatsu.jp/item_category-sitemap.xml",
+        14
+      ],
+      [
+        "https://www.bikatsu.jp/prefecture-sitemap.xml",
+        192
+      ],
+      [
+        "https://www.bikatsu.jp/type-sitemap.xml",
+        5
+      ]
+    ]
+  },
+  "shiga-seitai": {
+    "total_urls": 596,
+    "leaves": [
+      [
+        "https://shiga-seitai.jp/sitemap-misc.xml",
+        1
+      ],
+      [
+        "https://shiga-seitai.jp/category-sitemap.xml",
+        58
+      ],
+      [
+        "https://shiga-seitai.jp/post-sitemap.xml",
+        519
+      ],
+      [
+        "https://shiga-seitai.jp/page-sitemap.xml",
+        18
+      ]
+    ]
+  }
+}

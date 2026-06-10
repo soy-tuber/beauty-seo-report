@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- このサイトマップは、2026年6月10日の12:33 PMに、WordPress 用のオリジナル SEO プラグイン All in One SEO v4.9.6.2により動的生成されました。 -->
+
+<?xml-stylesheet type="text/xsl" href="https://npilates.jp/default-sitemap.xsl?sitemap=root"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<sitemap>
+		<loc><![CDATA[https://npilates.jp/post-sitemap.xml]]></loc>
+		<lastmod><![CDATA[2026-06-08T06:07:01+00:00]]></lastmod>
+	</sitemap>
+	<sitemap>
+		<loc><![CDATA[https://npilates.jp/page-sitemap.xml]]></loc>
+		<lastmod><![CDATA[2026-06-04T02:50:53+00:00]]></lastmod>
+	</sitemap>
+	<sitemap>
+		<loc><![CDATA[https://npilates.jp/lp-sitemap.xml]]></loc>
+		<lastmod><![CDATA[2026-01-19T01:43:18+00:00]]></lastmod>
+	</sitemap>
+	<sitemap>
+		<loc><![CDATA[https://npilates.jp/category-sitemap.xml]]></loc>
+		<lastmod><![CDATA[2026-06-08T06:07:01+00:00]]></lastmod>
+	</sitemap>
+</sitemapindex>
