@@ -73,10 +73,6 @@ data={"summary":summary,"years":years,"matrix":matrix,"topkw":topkw,"titles":tit
       "sites":SITES,"label":SITE_LABEL,"generated":"2026-06-10",
       "total":sum(len(arts.get(s,[])) for s in SITES)}
 
-# copy data files for download
-for f in ["articles.csv","keywords.csv","report.md"]:
-    shutil.copyfile(f"{BASE}/{f}", f"{DOCS}/{f}")
-
 HTML = """<!DOCTYPE html><html lang="ja"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
@@ -124,10 +120,6 @@ ul.titles{columns:2;font-size:.85rem;color:#cdd9e5;margin:0;padding-left:18px}
 <div class="grid" id="cards"></div>
 
 <div class="foot">
-<div class="dl"><b>データDL:</b>
-<a href="articles.csv">articles.csv（全記事）</a>
-<a href="keywords.csv">keywords.csv（マトリクス）</a>
-<a href="report.md">report.md</a></div>
 <p>注記: shiga-seitai の「整体/ストレッチ」は全ページ共通H2ナビ由来の残留を含む。parler は一部重複記事あり。データは公開サイトマップ・公開ページの公開メタ情報に基づく。</p>
 </div>
 </div>
