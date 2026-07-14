@@ -20,14 +20,17 @@ pilates-k.jp / clubpilates.co.jp / rintosull.jp / npilates.jp / ginza-blv.jp / p
 | `build_db.py` | 記事収集 → `seo.db` / `articles.csv` |
 | `analyze.py` | 集計 → `report.md` / `keywords.csv` |
 | `generate_html.py` | `docs/index.html`（公開レポート）生成 |
+| `instagram_posts.csv` | Instagram公開投稿スクレイプ（47アカウント・399投稿、教育用） |
+| `analyze_instagram.py` | IG分析 → `docs/instagram-analysis.html`（ハッシュタグ／時間帯／CTA／SEO×IGクロス） |
 | `seo.db` | SQLite（articles テーブル） |
 | `docs/` | GitHub Pages 配信ディレクトリ |
 
 ## 再生成
 ```bash
-python build_db.py      # 記事を取り直す（数分）
-python analyze.py       # 集計し直す
-python generate_html.py # HTMLを作り直す
+python build_db.py           # 記事を取り直す（数分）
+python analyze.py            # 集計し直す
+python generate_html.py      # HTMLを作り直す
+python analyze_instagram.py  # IG分析ページを作り直す
 ```
 
 データは公開サイトマップ・公開ページの公開メタ情報に基づく。レポートは `noindex` 設定。

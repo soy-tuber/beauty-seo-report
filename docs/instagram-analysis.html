@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="ja"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Instagram競合投稿分析｜美容・フィットネス系48アカウント</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+:root{--bg:#0f1419;--card:#1a2129;--ink:#e6edf3;--mut:#8b98a5;--ac:#4cc9f0;--ac2:#f72585;--line:#2a333d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Helvetica Neue",-apple-system,"Hiragino Kaku Gothic ProN","Meiryo",sans-serif;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 18px 80px}
+h1{font-size:1.7rem;margin:.2em 0}h2{font-size:1.25rem;border-left:4px solid var(--ac2);padding-left:10px;margin-top:2.2em}
+h3{font-size:1.02rem;color:var(--ac)}
+.sub{color:var(--mut);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{padding:6px 9px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--mut);font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+a{color:var(--ac)}a:hover{color:var(--ac2)}
+.pill{display:inline-block;background:#22303c;border-radius:20px;padding:2px 10px;margin:2px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+details{margin-top:8px}summary{cursor:pointer;color:var(--mut)}
+.chartbox{position:relative;height:300px}
+.foot{color:var(--mut);font-size:.8rem;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}
+.tag{font-size:.75rem;color:var(--bg);background:var(--ac2);border-radius:4px;padding:1px 6px;margin-left:6px}
+.nav{font-size:.88rem;margin-bottom:14px}.nav a{margin-right:16px}
+.edu{background:#1d2a20;border:1px solid #2e4a35;color:#a8d5b0;font-size:.84rem;border-radius:8px;padding:10px 14px;margin:14px 0}
+.take li{margin:.45em 0}
+.gap{color:var(--ac2)}
+.hm td{text-align:center;font-variant-numeric:tabular-nums}
+blockquote{margin:0;color:#cdd9e5;font-size:.85rem}
+</style></head><body><div class="wrap">
+<div class="nav"><a href="./index.html">← SEO分析トップ</a><a href="./content/index.html">コンテンツ教育サンプル</a></div>
+<h1>Instagram競合投稿分析 <span class="tag">教育用</span></h1>
+<p class="sub">美容・フィットネス・ピラティス系の公開 <b id="nu"></b> アカウント・<b id="tot"></b> 投稿（<b id="pd"></b>）のキャプション/エンゲージメント分析。
+SEO記事分析（<a href="./index.html">8サイト・記事テーマ比較</a>）と対をなす「SNS側のお題研究」。生成日 <b id="gen"></b></p>
+<div class="edu">📚 <b>教育用資料</b>: 公開投稿のメタ情報（いいね・コメント数・キャプション）のみを集計した学習用レポートです。
+いいね数は各アカウントのフォロワー規模に依存するため、絶対値の比較ではなく「同一アカウント内・カテゴリ内の傾向」を読むのが目的です。likes が非公開の投稿（<span id="unav"></span>件）は集計から除外。</div>
+
+<h2>1. アカウント別サマリ</h2>
+<div class="card"><div class="chartbox"><canvas id="acc"></canvas></div>
+<p class="sub">投稿数上位15アカウント。棒＝収集投稿数、線＝いいね中央値（右軸・対数）。</p></div>
+<div class="card"><details open><summary>全アカウント表（投稿数順）</summary><table id="acctbl"></table></details></div>
+
+<h2>2. ハッシュタグ分析</h2>
+<p class="sub">キャプション内の #タグ を集計。付与率 <b id="ptag"></b>%・1投稿あたり平均 <b id="atag"></b> 個。</p>
+<div class="card"><div class="chartbox"><canvas id="tags"></canvas></div></div>
+<div class="card" id="tagcloud"></div>
+
+<h2>3. 投稿タイミング（日本時間）</h2>
+<div class="grid2">
+<div class="card"><h3>時間帯別</h3><div class="chartbox"><canvas id="hr"></canvas></div></div>
+<div class="card"><h3>曜日別</h3><div class="chartbox"><canvas id="dw"></canvas></div></div>
+</div>
+
+<h2>4. キャプションの型（長さ・CTA）</h2>
+<div class="grid2">
+<div class="card"><h3>文字数といいね中央値</h3><div class="chartbox"><canvas id="len"></canvas></div></div>
+<div class="card"><h3>CTA（行動喚起）語の使用率</h3><table id="ctatbl"></table>
+<p class="sub">全体のいいね中央値 = <b id="medall"></b>。CTA を含む投稿の中央値との比較。</p></div>
+</div>
+
+<h2>5. SEO記事 × Instagram クロス分析</h2>
+<p class="sub">同じキーワード辞書（SEO分析と共通）で、<b>SEO記事 <span id="seototal"></span>本</b> と <b>Instagram投稿</b> の出現率(%)を比較。
+「検索では戦っているのに SNS では語られていない」テーマ＝コンテンツの空白地帯がわかる。</p>
+<div class="card" style="overflow-x:auto"><table class="hm" id="crosstbl"></table></div>
+
+<h2>6. 高エンゲージメント投稿 Top12</h2>
+<div class="card"><table id="toptbl"></table></div>
+
+<h2>7. 学びのポイント（教育用まとめ）</h2>
+<div class="card"><ul class="take" id="take"></ul></div>
+
+<div class="foot">
+<p>データは公開アカウントの公開投稿メタ情報（取得時点のスナップショット）に基づく教育用の集計です。
+キャプションは要旨のみ抜粋し、全文は元投稿リンクを参照してください。本ページは noindex 設定です。</p>
+</div>
+</div>
+<script>
+const D={"generated": "2026-07-14", "total": 397, "n_users": 47, "period": ["2022-04", "2026-07"], "med_all": 280, "unavailable": 23, "avg_tags": 3.6, "pct_tags": 64, "seo_total": 765, "accounts": [{"user": "demicstory", "n": 49, "med_likes": 9472, "max_likes": 19316, "med_com": 11, "sum_com": 713}, {"user": "teppei__hair", "n": 40, "med_likes": 36, "max_likes": 82, "med_com": 58, "sum_com": 1840}, {"user": "fitonomyapp", "n": 35, "med_likes": 2341, "max_likes": 8986, "med_com": 3, "sum_com": 312}, {"user": "saiko.relax", "n": 23, "med_likes": 63, "max_likes": 349, "med_com": 0, "sum_com": 7}, {"user": "bamli.tokyo", "n": 17, "med_likes": 1072, "max_likes": 3990, "med_com": 0, "sum_com": 10}, {"user": "lesi.fit", "n": 15, "med_likes": 9251, "max_likes": 24109, "med_com": 77, "sum_com": 1088}, {"user": "bodymakefumie", "n": 15, "med_likes": 286, "max_likes": 918, "med_com": 3, "sum_com": 94}, {"user": "hiitmefit", "n": 15, "med_likes": 128, "max_likes": 376, "med_com": 1, "sum_com": 22}, {"user": "daiki_core_trainer.27", "n": 14, "med_likes": 488, "max_likes": 4924, "med_com": 6, "sum_com": 143}, {"user": "fitzzapp", "n": 14, "med_likes": 372, "max_likes": 982, "med_com": 0, "sum_com": 9}, {"user": "pt_kettyo", "n": 14, "med_likes": 33, "max_likes": 109, "med_com": 0, "sum_com": 0}, {"user": "yuna_kirei", "n": 11, "med_likes": 118, "max_likes": 51835, "med_com": 7, "sum_com": 448}, {"user": "g.tail_wellness", "n": 11, "med_likes": 18, "max_likes": 91, "med_com": 0, "sum_com": 7}, {"user": "shingo.39.39", "n": 8, "med_likes": 1768, "max_likes": 2206, "med_com": 7, "sum_com": 77}, {"user": "taichi_flexible.body", "n": 8, "med_likes": 1322, "max_likes": 11562, "med_com": 38, "sum_com": 8336}, {"user": "rii_chokatsu_sweets", "n": 8, "med_likes": 492, "max_likes": 1134, "med_com": 12, "sum_com": 103}, {"user": "tun_diet_mama", "n": 7, "med_likes": 258, "max_likes": 489, "med_com": 2, "sum_com": 23}, {"user": "kyokamommy", "n": 7, "med_likes": 66, "max_likes": 468, "med_com": 2, "sum_com": 13}, {"user": "lionlifts", "n": 6, "med_likes": 3, "max_likes": 3, "med_com": 8, "sum_com": 239}, {"user": "hinach_workout", "n": 5, "med_likes": 8198, "max_likes": 28071, "med_com": 122, "sum_com": 704}, {"user": "aya.t_pilates", "n": 5, "med_likes": 18, "max_likes": 21, "med_com": 0, "sum_com": 0}, {"user": "juntakeda.bf", "n": 4, "med_likes": 13058, "max_likes": 26120, "med_com": 512, "sum_com": 13705}, {"user": "mito_diet_recipe", "n": 4, "med_likes": 11854, "max_likes": 42030, "med_com": 87, "sum_com": 8284}, {"user": "dietgohan_kame", "n": 4, "med_likes": 4930, "max_likes": 19953, "med_com": 36, "sum_com": 14831}, {"user": "shinkyu_refine", "n": 4, "med_likes": 134, "max_likes": 477, "med_com": 0, "sum_com": 3}, {"user": "es.esthetiquesalon", "n": 3, "med_likes": 32040, "max_likes": 63934, "med_com": 2, "sum_com": 223}, {"user": "takemari1219", "n": 3, "med_likes": 18230, "max_likes": 103201, "med_com": 95, "sum_com": 743}, {"user": "taki_diet_recipe", "n": 3, "med_likes": 12728, "max_likes": 25910, "med_com": 972, "sum_com": 11221}, {"user": "rinodiet11", "n": 3, "med_likes": 6933, "max_likes": 20451, "med_com": 37, "sum_com": 92}, {"user": "hana.cosme33", "n": 3, "med_likes": 1560, "max_likes": 1727, "med_com": 1, "sum_com": 4}, {"user": "kana_diet_recipe", "n": 3, "med_likes": 431, "max_likes": 8729, "med_com": 18, "sum_com": 107}, {"user": "holistic_remedialtherapy", "n": 3, "med_likes": 385, "max_likes": 595, "med_com": 0, "sum_com": 0}, {"user": "qpu_kokura", "n": 3, "med_likes": 204, "max_likes": 218, "med_com": 2, "sum_com": 8}, {"user": "fit_gallery_top", "n": 3, "med_likes": 169, "max_likes": 181, "med_com": 1, "sum_com": 3}, {"user": "__maipilates__", "n": 3, "med_likes": 62, "max_likes": 68, "med_com": 2, "sum_com": 5}, {"user": "saori_yoga_", "n": 3, "med_likes": 57, "max_likes": 65, "med_com": 0, "sum_com": 2}, {"user": "saloncle_", "n": 3, "med_likes": 32, "max_likes": 53, "med_com": 0, "sum_com": 0}, {"user": "ameliorer_mitaka_kokubunji", "n": 3, "med_likes": 12, "max_likes": 19, "med_com": 0, "sum_com": 0}, {"user": "bust_up_coach", "n": 3, "med_likes": 4, "max_likes": 6, "med_com": 0, "sum_com": 0}, {"user": "yui_beauty3", "n": 3, "med_likes": 0, "max_likes": 0, "med_com": 38, "sum_com": 115}, {"user": "tsukiyoga", "n": 2, "med_likes": 221507, "max_likes": 442307, "med_com": 196, "sum_com": 392}, {"user": "yui87_tonecompany", "n": 2, "med_likes": 184, "max_likes": 215, "med_com": 8, "sum_com": 17}, {"user": "elvt.app", "n": 1, "med_likes": 2829, "max_likes": 2829, "med_com": 21, "sum_com": 21}, {"user": "im.aim.official", "n": 1, "med_likes": 278, "max_likes": 278, "med_com": 5, "sum_com": 5}, {"user": "g.tail_nikotama", "n": 1, "med_likes": 111, "max_likes": 111, "med_com": 10, "sum_com": 10}, {"user": "haruka_seiro", "n": 1, "med_likes": 59, "max_likes": 59, "med_com": 0, "sum_com": 0}, {"user": "tone_tokyo1015", "n": 1, "med_likes": 51, "max_likes": 51, "med_com": 1, "sum_com": 1}], "top_tags": [{"tag": "ブリーチなしグレージュ", "n": 40, "med": 36}, {"tag": "ブリーチなしダブルカラー", "n": 40, "med": 36}, {"tag": "くすみカラー", "n": 39, "med": 35}, {"tag": "リラクゼーションサロン", "n": 21, "med": 67}, {"tag": "リラクゼーションマッサージ", "n": 21, "med": 67}, {"tag": "セラピスト養成講座", "n": 21, "med": 67}, {"tag": "セラピスト起業", "n": 19, "med": 63}, {"tag": "ボディケアスクール", "n": 19, "med": 63}, {"tag": "homeworkout", "n": 17, "med": 411}, {"tag": "gym", "n": 17, "med": 325}, {"tag": "fitness", "n": 17, "med": 325}, {"tag": "bodybuilding", "n": 17, "med": 325}, {"tag": "ダイエット", "n": 15, "med": 7855}, {"tag": "エクササイズ", "n": 12, "med": 244}, {"tag": "グルテンフリー", "n": 12, "med": 4494}, {"tag": "ヨガ", "n": 11, "med": 1888}, {"tag": "glutes", "n": 11, "med": 3188}, {"tag": "機能美", "n": 10, "med": 30}, {"tag": "PR", "n": 10, "med": 86}, {"tag": "ダイエットレシピ", "n": 9, "med": 8729}, {"tag": "legworkout", "n": 9, "med": 563}, {"tag": "ストレッチ", "n": 7, "med": 1200}, {"tag": "ピラティス", "n": 6, "med": 20}, {"tag": "40代ダイエット", "n": 6, "med": 45}, {"tag": "簡単おやつ", "n": 6, "med": 1078}, {"tag": "mobility", "n": 6, "med": 2824}, {"tag": "lowerbody", "n": 6, "med": 3756}, {"tag": "40代", "n": 5, "med": 214}, {"tag": "ピラティスインストラクター", "n": 5, "med": 18}, {"tag": "産後ダイエット", "n": 5, "med": 373}, {"tag": "ヘルシーレシピ", "n": 5, "med": 8729}, {"tag": "ヘルシースイーツ", "n": 5, "med": 12728}, {"tag": "痩せたい", "n": 5, "med": 373}, {"tag": "スキンケア", "n": 5, "med": 2208}, {"tag": "formcheck", "n": 5, "med": 1661}, {"tag": "食いしばり", "n": 4, "med": 114}, {"tag": "小顔矯正", "n": 4, "med": 165}, {"tag": "お腹痩せ", "n": 4, "med": 12042}, {"tag": "ヨガインストラクター", "n": 4, "med": 61}, {"tag": "pilates", "n": 4, "med": 18}], "hours": [{"h": 0, "n": 13, "med": 447}, {"h": 1, "n": 7, "med": 4947}, {"h": 2, "n": 10, "med": 6733}, {"h": 3, "n": 9, "med": 2460}, {"h": 4, "n": 15, "med": 438}, {"h": 5, "n": 3, "med": 8825}, {"h": 6, "n": 1, "med": 21}, {"h": 7, "n": 14, "med": 4924}, {"h": 8, "n": 17, "med": 2203}, {"h": 9, "n": 16, "med": 3129}, {"h": 10, "n": 14, "med": 60}, {"h": 11, "n": 17, "med": 75}, {"h": 12, "n": 3, "med": 269}, {"h": 13, "n": 5, "med": 64}, {"h": 14, "n": 3, "med": 104}, {"h": 15, "n": 3, "med": 47}, {"h": 16, "n": 6, "med": 807}, {"h": 17, "n": 19, "med": 1511}, {"h": 18, "n": 50, "med": 65}, {"h": 19, "n": 54, "med": 85}, {"h": 20, "n": 34, "med": 194}, {"h": 21, "n": 37, "med": 294}, {"h": 22, "n": 27, "med": 918}, {"h": 23, "n": 20, "med": 2942}], "dows": [{"d": "月", "n": 57, "med": 286}, {"d": "火", "n": 55, "med": 592}, {"d": "水", "n": 40, "med": 268}, {"d": "木", "n": 60, "med": 170}, {"d": "金", "n": 52, "med": 183}, {"d": "土", "n": 69, "med": 385}, {"d": "日", "n": 64, "med": 336}], "len_stats": [{"label": "〜100字", "n": 84, "med": 7763}, {"label": "100〜300字", "n": 92, "med": 394}, {"label": "300〜600字", "n": 146, "med": 82}, {"label": "600〜1000字", "n": 46, "med": 68}, {"label": "1000字〜", "n": 29, "med": 278}], "cta": [{"cta": "フォロー", "n": 45, "med": 190}, {"cta": "保存", "n": 78, "med": 52}, {"cta": "いいね", "n": 22, "med": 74}, {"cta": "コメント", "n": 43, "med": 613}, {"cta": "プロフィール", "n": 81, "med": 42}, {"cta": "DM", "n": 87, "med": 47}, {"cta": "LINE", "n": 26, "med": 252}, {"cta": "予約", "n": 65, "med": 53}, {"cta": "無料", "n": 17, "med": 48}], "cross": [{"theme": "悩み・症状", "kw": "腰痛", "seo": 52, "seo_pct": 6.8, "ig": 7, "ig_pct": 1.8}, {"theme": "悩み・症状", "kw": "肩こり", "seo": 28, "seo_pct": 3.7, "ig": 6, "ig_pct": 1.5}, {"theme": "悩み・症状", "kw": "猫背", "seo": 19, "seo_pct": 2.5, "ig": 4, "ig_pct": 1.0}, {"theme": "悩み・症状", "kw": "反り腰", "seo": 16, "seo_pct": 2.1, "ig": 5, "ig_pct": 1.3}, {"theme": "悩み・症状", "kw": "巻き肩", "seo": 4, "seo_pct": 0.5, "ig": 2, "ig_pct": 0.5}, {"theme": "悩み・症状", "kw": "ぽっこり", "seo": 32, "seo_pct": 4.2, "ig": 4, "ig_pct": 1.0}, {"theme": "悩み・症状", "kw": "むくみ", "seo": 24, "seo_pct": 3.1, "ig": 5, "ig_pct": 1.3}, {"theme": "悩み・症状", "kw": "冷え", "seo": 8, "seo_pct": 1.0, "ig": 3, "ig_pct": 0.8}, {"theme": "悩み・症状", "kw": "便秘", "seo": 2, "seo_pct": 0.3, "ig": 0, "ig_pct": 0.0}, {"theme": "悩み・症状", "kw": "自律神経", "seo": 8, "seo_pct": 1.0, "ig": 12, "ig_pct": 3.0}, {"theme": "悩み・症状", "kw": "睡眠", "seo": 23, "seo_pct": 3.0, "ig": 5, "ig_pct": 1.3}, {"theme": "悩み・症状", "kw": "側弯", "seo": 4, "seo_pct": 0.5, "ig": 1, "ig_pct": 0.3}, {"theme": "悩み・症状", "kw": "ヘルニア", "seo": 4, "seo_pct": 0.5, "ig": 0, "ig_pct": 0.0}, {"theme": "悩み・症状", "kw": "坐骨神経", "seo": 4, "seo_pct": 0.5, "ig": 0, "ig_pct": 0.0}, {"theme": "悩み・症状", "kw": "ストレートネック", "seo": 14, "seo_pct": 1.8, "ig": 1, "ig_pct": 0.3}, {"theme": "悩み・症状", "kw": "頭痛", "seo": 17, "seo_pct": 2.2, "ig": 1, "ig_pct": 0.3}, {"theme": "悩み・症状", "kw": "膝", "seo": 15, "seo_pct": 2.0, "ig": 13, "ig_pct": 3.3}, {"theme": "悩み・症状", "kw": "股関節", "seo": 11, "seo_pct": 1.4, "ig": 12, "ig_pct": 3.0}, {"theme": "悩み・症状", "kw": "産後", "seo": 23, "seo_pct": 3.0, "ig": 11, "ig_pct": 2.8}, {"theme": "悩み・症状", "kw": "更年期", "seo": 4, "seo_pct": 0.5, "ig": 0, "ig_pct": 0.0}, {"theme": "悩み・症状", "kw": "生理", "seo": 1, "seo_pct": 0.1, "ig": 3, "ig_pct": 0.8}, {"theme": "なりたい姿", "kw": "ダイエット", "seo": 94, "seo_pct": 12.3, "ig": 60, "ig_pct": 15.1}, {"theme": "なりたい姿", "kw": "痩身", "seo": 37, "seo_pct": 4.8, "ig": 1, "ig_pct": 0.3}, {"theme": "なりたい姿", "kw": "痩せ", "seo": 81, "seo_pct": 10.6, "ig": 48, "ig_pct": 12.1}, {"theme": "なりたい姿", "kw": "くびれ", "seo": 5, "seo_pct": 0.7, "ig": 7, "ig_pct": 1.8}, {"theme": "なりたい姿", "kw": "美脚", "seo": 15, "seo_pct": 2.0, "ig": 1, "ig_pct": 0.3}, {"theme": "なりたい姿", "kw": "美尻", "seo": 3, "seo_pct": 0.4, "ig": 5, "ig_pct": 1.3}, {"theme": "なりたい姿", "kw": "二の腕", "seo": 14, "seo_pct": 1.8, "ig": 3, "ig_pct": 0.8}, {"theme": "なりたい姿", "kw": "小顔", "seo": 16, "seo_pct": 2.1, "ig": 7, "ig_pct": 1.8}, {"theme": "なりたい姿", "kw": "姿勢改善", "seo": 13, "seo_pct": 1.7, "ig": 8, "ig_pct": 2.0}, {"theme": "なりたい姿", "kw": "姿勢", "seo": 95, "seo_pct": 12.4, "ig": 39, "ig_pct": 9.8}, {"theme": "なりたい姿", "kw": "体幹", "seo": 31, "seo_pct": 4.1, "ig": 22, "ig_pct": 5.5}, {"theme": "なりたい姿", "kw": "インナーマッスル", "seo": 32, "seo_pct": 4.2, "ig": 5, "ig_pct": 1.3}, {"theme": "なりたい姿", "kw": "柔軟", "seo": 9, "seo_pct": 1.2, "ig": 8, "ig_pct": 2.0}, {"theme": "なりたい姿", "kw": "可動域", "seo": 1, "seo_pct": 0.1, "ig": 3, "ig_pct": 0.8}, {"theme": "なりたい姿", "kw": "引き締め", "seo": 13, "seo_pct": 1.7, "ig": 9, "ig_pct": 2.3}, {"theme": "なりたい姿", "kw": "脚やせ", "seo": 5, "seo_pct": 0.7, "ig": 1, "ig_pct": 0.3}, {"theme": "手法", "kw": "マシンピラティス", "seo": 55, "seo_pct": 7.2, "ig": 2, "ig_pct": 0.5}, {"theme": "手法", "kw": "ピラティス", "seo": 212, "seo_pct": 27.7, "ig": 21, "ig_pct": 5.3}, {"theme": "手法", "kw": "ヨガ", "seo": 23, "seo_pct": 3.0, "ig": 13, "ig_pct": 3.3}, {"theme": "手法", "kw": "整体", "seo": 178, "seo_pct": 23.3, "ig": 9, "ig_pct": 2.3}, {"theme": "手法", "kw": "ストレッチ", "seo": 201, "seo_pct": 26.3, "ig": 28, "ig_pct": 7.1}, {"theme": "手法", "kw": "エステ", "seo": 154, "seo_pct": 20.1, "ig": 9, "ig_pct": 2.3}, {"theme": "手法", "kw": "骨盤矯正", "seo": 31, "seo_pct": 4.1, "ig": 1, "ig_pct": 0.3}, {"theme": "手法", "kw": "骨盤", "seo": 59, "seo_pct": 7.7, "ig": 19, "ig_pct": 4.8}, {"theme": "手法", "kw": "マッサージ", "seo": 25, "seo_pct": 3.3, "ig": 27, "ig_pct": 6.8}, {"theme": "手法", "kw": "鍼", "seo": 2, "seo_pct": 0.3, "ig": 0, "ig_pct": 0.0}, {"theme": "手法", "kw": "パーソナル", "seo": 8, "seo_pct": 1.0, "ig": 20, "ig_pct": 5.0}, {"theme": "手法", "kw": "筋トレ", "seo": 39, "seo_pct": 5.1, "ig": 16, "ig_pct": 4.0}, {"theme": "手法", "kw": "トレーニング", "seo": 69, "seo_pct": 9.0, "ig": 23, "ig_pct": 5.8}, {"theme": "検索意図", "kw": "効果", "seo": 236, "seo_pct": 30.8, "ig": 34, "ig_pct": 8.6}, {"theme": "検索意図", "kw": "初心者", "seo": 32, "seo_pct": 4.2, "ig": 1, "ig_pct": 0.3}, {"theme": "検索意図", "kw": "違い", "seo": 59, "seo_pct": 7.7, "ig": 5, "ig_pct": 1.3}, {"theme": "検索意図", "kw": "とは", "seo": 201, "seo_pct": 26.3, "ig": 30, "ig_pct": 7.6}, {"theme": "検索意図", "kw": "おすすめ", "seo": 156, "seo_pct": 20.4, "ig": 73, "ig_pct": 18.4}, {"theme": "検索意図", "kw": "頻度", "seo": 19, "seo_pct": 2.5, "ig": 0, "ig_pct": 0.0}, {"theme": "検索意図", "kw": "回数", "seo": 12, "seo_pct": 1.6, "ig": 12, "ig_pct": 3.0}, {"theme": "検索意図", "kw": "体験", "seo": 30, "seo_pct": 3.9, "ig": 6, "ig_pct": 1.5}, {"theme": "検索意図", "kw": "口コミ", "seo": 6, "seo_pct": 0.8, "ig": 0, "ig_pct": 0.0}, {"theme": "検索意図", "kw": "比較", "seo": 12, "seo_pct": 1.6, "ig": 1, "ig_pct": 0.3}, {"theme": "検索意図", "kw": "選び方", "seo": 41, "seo_pct": 5.4, "ig": 1, "ig_pct": 0.3}, {"theme": "検索意図", "kw": "自宅", "seo": 57, "seo_pct": 7.5, "ig": 13, "ig_pct": 3.3}, {"theme": "検索意図", "kw": "方法", "seo": 175, "seo_pct": 22.9, "ig": 14, "ig_pct": 3.5}, {"theme": "検索意図", "kw": "原因", "seo": 186, "seo_pct": 24.3, "ig": 13, "ig_pct": 3.3}, {"theme": "検索意図", "kw": "改善", "seo": 133, "seo_pct": 17.4, "ig": 30, "ig_pct": 7.6}, {"theme": "検索意図", "kw": "解消", "seo": 45, "seo_pct": 5.9, "ig": 9, "ig_pct": 2.3}, {"theme": "検索意図", "kw": "メリット", "seo": 62, "seo_pct": 8.1, "ig": 0, "ig_pct": 0.0}, {"theme": "検索意図", "kw": "デメリット", "seo": 8, "seo_pct": 1.0, "ig": 0, "ig_pct": 0.0}, {"theme": "検索意図", "kw": "料金", "seo": 14, "seo_pct": 1.8, "ig": 3, "ig_pct": 0.8}], "top_posts": [{"user": "tsukiyoga", "likes": 442307, "com": 353, "cap": "@tsukiyoga #肋骨締め て、くびれるには…(EN follows JP) ①ほぐして ②吐く呼吸で肋骨とじて ③筋肉でクセ付け✨ こんな人におすすめ ●くびれがない人(四…", "url": "https://www.instagram.com/p/Cpr0w5VOIke/", "date": "2023-03-12"}, {"user": "takemari1219", "likes": 103201, "com": 584, "cap": "チリツモを続けた結果、妊娠前より痩せました🥹👏 今までで1番楽しいダイエットだったし 1番結果が出たダイエットだったと思います🥹 ハイライトにラスト100日の生活をまとめているので…", "url": "https://www.instagram.com/p/C6bS9dpvrO9/", "date": "2024-05-01"}, {"user": "es.esthetiquesalon", "likes": 63934, "com": 221, "cap": "最新エステ韓国式🇰🇷3D毛穴洗浄！ 特殊な技術を使い毛穴の汚れを浮かせ 優しく吸引し、毛穴汚れを丸ごとスッキリできます！ ハイドラフェイシャルなどでは取りきれないような 頑固な角栓…", "url": "https://www.instagram.com/p/C1wr5i-pPKK/", "date": "2024-01-06"}, {"user": "yuna_kirei", "likes": 51835, "com": 161, "cap": "せいろで作るご自愛レシピを紹介していきます🫶🏻 以前は外見の美容アカウントとして発信していましたが、 今後は外見だけでなく、心や暮らしの美容についても発信をしていきたいと思っていま…", "url": "https://www.instagram.com/p/DN4pF6sjxcu/", "date": "2025-08-28"}, {"user": "mito_diet_recipe", "likes": 42030, "com": 8109, "cap": "レシピ詳細はココをタップ👇 作ってみたいと思ったら【❤️】てコメントしてね♡ フォロー、いいね、コメント喜びます🐶♡ ...............................…", "url": "https://www.instagram.com/p/DMnTMmwySQu/", "date": "2025-07-27"}, {"user": "hinach_workout", "likes": 28071, "com": 167, "cap": "私はこの8年間、ずっと色んなボディメイクに挑戦してきました😭 今回が自分史上No.1！！！！！！！（もちろん加工なしです✋） ずんどうでも、ペチャパイでも。 くびれは作れるし、バス…", "url": "https://www.instagram.com/p/DOS68fJADz_/", "date": "2025-09-07"}, {"user": "juntakeda.bf", "likes": 26120, "com": 12257, "cap": "🔻【神ストレッチ欲しい方】 私の年齢をコメントしてください←前の投稿に出てるわよ❤️ 《DM➡︎神ストレッチ》のステップ！ ⁡ －－－－－－－－－－－－ ⁡ 【保存】していつでも動…", "url": "https://www.instagram.com/p/DPTneeeATA-/", "date": "2025-10-02"}, {"user": "taki_diet_recipe", "likes": 25910, "com": 972, "cap": "\\バズってたアレ🤫太らない生クッキー/ 詳しいレシピは⤵︎ 投稿見てくれてありがとうございます🥰 小さい頃、クッキー生地って なんかすごく魅力的だったのはわたしだけ？🤔笑 あのざら…", "url": "https://www.instagram.com/p/DTxChAKEbAu/", "date": "2026-01-21"}, {"user": "lesi.fit", "likes": 24109, "com": 92, "cap": "this is your sign to romanticize your life 💛", "url": "https://www.instagram.com/p/Dap7YVDDSic/", "date": "2026-07-11"}, {"user": "juntakeda.bf", "likes": 23793, "com": 423, "cap": "🔻《月1限定募集中》 おうち床バレエ教室のご案内&勉強会へ参加されたい方は 【床バレエ教室】 とコメントください☺️ 🔻隠れポイントはコメント欄💬見てください！ ⁡ ⁡ ＊＊＊＊＊…", "url": "https://www.instagram.com/p/C9CmKF5SnvY/", "date": "2024-07-05"}, {"user": "mito_diet_recipe", "likes": 23562, "com": 164, "cap": "レシピ詳細はココをタップ👇 フォロー、いいね、コメント喜びます🐶♡ ........................................................…", "url": "https://www.instagram.com/p/DO0bjPHEV8k/", "date": "2025-09-20"}, {"user": "rinodiet11", "likes": 20451, "com": 47, "cap": "@rinodiet11 ←体型ビフォアフ＆レシピ 【73日目】100日ダイエット-7キロ目指す記録📝 169cm 58キロスタート -＊-＊-＊-＊-＊-＊-＊-＊- どうも、りの…", "url": "https://www.instagram.com/p/C5Ng33ryhbM/", "date": "2024-04-01"}], "best_hour": 19, "best_dow": "土", "gap_seo": ["効果", "ピラティス", "ストレッチ", "とは", "原因", "整体"], "gap_ig": ["パーソナル"]};
+const $=id=>document.getElementById(id);
+$('gen').textContent=D.generated;$('tot').textContent=D.total;$('nu').textContent=D.n_users;
+$('pd').textContent=D.period[0]+' 〜 '+D.period[1];$('unav').textContent=D.unavailable;
+$('ptag').textContent=D.pct_tags;$('atag').textContent=D.avg_tags;
+$('medall').textContent=D.med_all;$('seototal').textContent=D.seo_total;
+const C=getComputedStyle(document.documentElement);
+const AC=C.getPropertyValue('--ac').trim(),AC2=C.getPropertyValue('--ac2').trim(),MUT=C.getPropertyValue('--mut').trim();
+// ---- tables & text first (Chart.js が読めなくても表は出す) ----
+let ah='<tr><th>アカウント</th><th class=num>投稿</th><th class=num>いいね中央値</th><th class=num>いいね最大</th><th class=num>コメント計</th></tr>';
+D.accounts.forEach(a=>{ah+=`<tr><td><a href="https://www.instagram.com/${a.user}/" target="_blank" rel="noopener">${a.user}</a></td>
+<td class=num>${a.n}</td><td class=num>${a.med_likes.toLocaleString()}</td><td class=num>${a.max_likes.toLocaleString()}</td><td class=num>${a.sum_com.toLocaleString()}</td></tr>`;});
+acctbl.innerHTML=ah;
+tagcloud.innerHTML=D.top_tags.map(t=>`<span class="pill">#${t.tag} <b>${t.n}</b></span>`).join('');
+let ch='<tr><th>CTA語</th><th class=num>投稿数</th><th class=num>使用率</th><th class=num>いいね中央値</th></tr>';
+D.cta.sort((a,b)=>b.n-a.n).forEach(c=>{
+ ch+=`<tr><td>${c.cta}</td><td class=num>${c.n}</td><td class=num>${Math.round(100*c.n/D.total)}%</td>
+ <td class=num>${c.med.toLocaleString()}${c.med>D.med_all?' <span style="color:'+AC2+'">▲</span>':''}</td></tr>`;});
+ctatbl.innerHTML=ch;
+// 5. cross
+const mxp=Math.max(...D.cross.map(c=>Math.max(c.seo_pct,c.ig_pct)));
+let xh='<tr><th>テーマ</th><th>キーワード</th><th class=num>SEO記事数</th><th class=num>SEO出現率</th><th class=num>IG投稿数</th><th class=num>IG出現率</th><th>ギャップ</th></tr>';
+let lastT='';
+D.cross.sort((a,b)=>a.theme.localeCompare(b.theme)||(b.seo_pct+b.ig_pct)-(a.seo_pct+a.ig_pct)).forEach(c=>{
+ const tcell=c.theme!==lastT?`<td>${c.theme}</td>`:'<td></td>';lastT=c.theme;
+ const cell=(v,col)=>`<td class=num style="background:rgba(${col},${v?0.10+0.85*v/mxp:0})">${v}%</td>`;
+ let gap='';
+ if(c.seo_pct>=3&&c.ig_pct<c.seo_pct/3)gap='<span class=gap>SNS未開拓</span>';
+ else if(c.ig_pct>=3&&c.seo_pct<c.ig_pct/3)gap='<span style="color:#80ffdb">記事化余地</span>';
+ xh+=`<tr>${tcell}<td>${c.kw}</td><td class=num>${c.seo}</td>${cell(c.seo_pct,'76,201,240')}<td class=num>${c.ig}</td>${cell(c.ig_pct,'247,37,133')}<td>${gap}</td></tr>`;});
+crosstbl.innerHTML=xh;
+// 6. top posts
+let th='<tr><th>#</th><th>アカウント</th><th class=num>いいね</th><th class=num>コメント</th><th>投稿日</th><th>キャプション要旨</th></tr>';
+D.top_posts.forEach((p,i)=>{th+=`<tr><td>${i+1}</td><td>${p.user}</td><td class=num><b>${p.likes.toLocaleString()}</b></td>
+<td class=num>${p.com}</td><td>${p.date}</td><td><blockquote>${p.cap.replace(/</g,'&lt;')}</blockquote>
+<a href="${p.url}" target="_blank" rel="noopener" class=sub>元投稿 ↗</a></td></tr>`;});
+toptbl.innerHTML=th;
+// 7. takeaways
+const cta_top=D.cta.filter(c=>c.n>=20&&c.med>D.med_all).map(c=>c.cta);
+take.innerHTML=[
+ `<b>投稿タイミング</b>: 最多は <b>${D.best_hour}時台</b>・<b>${D.best_dow}曜</b>。ターゲット（美容・健康関心層）の生活リズムに合わせた予約投稿が定石。`,
+ `<b>ハッシュタグ</b>: 付与率 ${D.pct_tags}%・平均 ${D.avg_tags} 個/投稿。上位タグ（${D.top_tags.slice(0,3).map(t=>'#'+t.tag).join(' ')}…）は「検索キーワード」と「コミュニティタグ」の2層で構成される。`,
+ cta_top.length?`<b>CTA</b>: 「${cta_top.join('」「')}」を含む投稿は全体中央値（${D.med_all}いいね）を上回る傾向。保存・フォロー誘導は依然有効。`:`<b>CTA</b>: 明確ないいね押し上げ効果は今回のサンプルでは確認できず。文脈依存が大きい。`,
+ D.gap_seo.length?`<b class=gap>SNS未開拓キーワード</b>（SEOでは頻出・IGでは希薄）: ${D.gap_seo.join(' / ')} — リール・カルーセルの新ネタ候補。`:'',
+ D.gap_ig.length?`<b style="color:#80ffdb">記事化余地キーワード</b>（IGでは頻出・SEO記事では希薄）: ${D.gap_ig.join(' / ')} — 検索コンテンツへの展開候補。`:'',
+ `<b>注意</b>: いいね数はフォロワー規模の影響が支配的。施策の評価は「同一アカウント内の前後比較」か「エンゲージメント率（要フォロワー数）」で行うこと。`,
+].filter(Boolean).map(t=>`<li>${t}</li>`).join('');
+// ---- charts (CDN 読込失敗時は表のみ表示) ----
+if(window.Chart){
+Chart.defaults.color=MUT;Chart.defaults.borderColor='#2a333d';
+const A=D.accounts.slice(0,15);
+new Chart(acc,{data:{labels:A.map(a=>a.user),datasets:[
+ {type:'bar',label:'投稿数',data:A.map(a=>a.n),backgroundColor:AC,yAxisID:'y'},
+ {type:'line',label:'いいね中央値',data:A.map(a=>Math.max(a.med_likes,1)),borderColor:AC2,yAxisID:'y2',tension:.3}]},
+ options:{scales:{y:{beginAtZero:true},y2:{position:'right',type:'logarithmic',grid:{display:false}}}}});
+const T=D.top_tags.slice(0,15);
+new Chart(tags,{type:'bar',data:{labels:T.map(t=>'#'+t.tag),datasets:[{label:'使用投稿数',data:T.map(t=>t.n),backgroundColor:AC2}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}});
+new Chart(hr,{data:{labels:D.hours.map(h=>h.h+'時'),datasets:[
+ {type:'bar',label:'投稿数',data:D.hours.map(h=>h.n),backgroundColor:AC},
+ {type:'line',label:'いいね中央値',data:D.hours.map(h=>h.med),borderColor:AC2,yAxisID:'y2',tension:.3}]},
+ options:{scales:{y:{beginAtZero:true},y2:{position:'right',beginAtZero:true,grid:{display:false}}}}});
+new Chart(dw,{data:{labels:D.dows.map(d=>d.d),datasets:[
+ {type:'bar',label:'投稿数',data:D.dows.map(d=>d.n),backgroundColor:AC},
+ {type:'line',label:'いいね中央値',data:D.dows.map(d=>d.med),borderColor:AC2,yAxisID:'y2',tension:.3}]},
+ options:{scales:{y:{beginAtZero:true},y2:{position:'right',beginAtZero:true,grid:{display:false}}}}});
+new Chart(len,{data:{labels:D.len_stats.map(l=>l.label),datasets:[
+ {type:'bar',label:'投稿数',data:D.len_stats.map(l=>l.n),backgroundColor:AC},
+ {type:'line',label:'いいね中央値',data:D.len_stats.map(l=>l.med),borderColor:AC2,yAxisID:'y2',tension:.3}]},
+ options:{scales:{y:{beginAtZero:true},y2:{position:'right',beginAtZero:true,grid:{display:false}}}}});
+}
+</script></body></html>
