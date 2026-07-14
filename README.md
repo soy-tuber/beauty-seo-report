@@ -22,6 +22,7 @@ pilates-k.jp / clubpilates.co.jp / rintosull.jp / npilates.jp / ginza-blv.jp / p
 | `generate_html.py` | `docs/index.html`（公開レポート）生成 |
 | `instagram_posts.csv` | Instagram公開投稿スクレイプ（47アカウント・399投稿、教育用） |
 | `analyze_instagram.py` | IG分析 → `docs/instagram-analysis.html`（ハッシュタグ／時間帯／CTA／SEO×IGクロス） |
+| `generate_instagram_examples.py` | 投稿例300本+秘訣10ルール → `docs/content/instagram.html`（分類・CTA・推奨時間は統計準拠） |
 | `seo.db` | SQLite（articles テーブル） |
 | `docs/` | GitHub Pages 配信ディレクトリ |
 

@@ -3,8 +3,8 @@
 ブログ5記事 + Instagram投稿例30 をマルチページHTMLで生成 -> docs/content/
 ※ペルソナ・エピソードはすべて架空のサンプル。実在の事実に差し替えて使う前提。"""
 import os, html
-BASE = "C:/Users/q0702/seo-analysis"
-OUT = f"{BASE}/docs/content"
+BASE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(BASE, "docs", "content")
 os.makedirs(OUT, exist_ok=True)
 
 PERSONA = {
@@ -144,7 +144,9 @@ ARTICLES = [
  },
 ]
 
-# ===== Instagram投稿例30 ======================================================
+# ===== Instagram投稿例(旧30本・参考用) ========================================
+# ※ instagram.html の生成は generate_instagram_examples.py(300本+秘訣10ルール)に移行済み。
+#   以下の30本は初期サンプルのアーカイブとして残している。
 # type: feed / reel / carousel
 IG = [
  ("reel","産後","【産後ママ必見】骨盤を立て直す“呼吸”だけエクササイズ🤱",
@@ -333,7 +335,7 @@ def render_index():
 <p class="lead">{PERSONA['name']}が、自身の体験をベースに綴る体験記。"穴"テーマ（産後・睡眠・自律神経）と王道（反り腰・初心者）を狙ったSEOサンプルです。</p>
 <div class="toc">{items}</div>
 {author_box()}
-<div class="next"><a href="instagram.html">📷 Instagram投稿例30本を見る →</a></div>
+<div class="next"><a href="instagram.html">📷 Instagram投稿例300本 + 秘訣10ルールを見る →</a></div>
 """
     return page("ピラティス体験記ブログ｜Studio Miki", body)
 
@@ -366,8 +368,9 @@ def main():
         nxt = ARTICLES[i+1] if i<len(ARTICLES)-1 else None
         with open(f"{OUT}/blog-{a['id']}.html","w",encoding="utf-8") as f:
             f.write(render_article(a, prev, nxt))
-    with open(f"{OUT}/instagram.html","w",encoding="utf-8") as f: f.write(render_ig())
-    print(f"wrote {len(ARTICLES)} articles + index + instagram -> {OUT}")
+    # instagram.html は generate_instagram_examples.py が生成する(300本+秘訣10ルール)
+    print(f"wrote {len(ARTICLES)} articles + index -> {OUT}")
+    print("instagram.html は python generate_instagram_examples.py で生成してください")
     print("pages:", os.listdir(OUT))
 
 if __name__=="__main__":
